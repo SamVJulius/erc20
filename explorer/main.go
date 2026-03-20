@@ -1,19 +1,21 @@
-package explorer
+package main
 
 import (
 	"explorer/api"
 	"explorer/rpc"
 	"log"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	rpc.InitClient()
 
-	http.HandleFunc("/block", api.BlockHandler)
-	http.HandleFunc("/txs", api.TxHandler)
-	http.HandleFunc("/transfers", api.TokenHandler)
+	r := gin.Default()
+	r.GET("/block", api.BlockHandler)
+	r.GET("/txs", api.TxHandler)
+	r.GET("/transfers", api.TokenHandler)
 
 	log.Println("Explorer running at http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(r.Run(":8080"))
 }

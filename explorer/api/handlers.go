@@ -1,38 +1,37 @@
 package api
 
 import (
-	"encoding/json"
 	"explorer/services"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-
-func BlockHandler(w http.ResponseWriter, r *http.Request) {
+func BlockHandler(c *gin.Context) {
 	block, err := services.GetLatestBlock()
 	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return 
-	}
-
-	json.NewEncoder(w).Encode(block)
-}
-
-func TxHandler(w http.ResponseWriter, r *http.Request) {
-	txs, err := services.GetLatestTransactions() 
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return 
-	}
-
-	json.NewEncoder(w).Encode(txs)
-}
-
-func TokenHandler(w http.ResponseWriter, r *http.Request) {
-	transfers, err := services.GetTokenTransfers()
-	if err != nil {
-		http.Error(w, err.Error(), 500)
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
-	json.NewEncoder(w).Encode(transfers)
+	c.JSON(200, block)
+}
+
+func TxHandler(c *gin.Context) {
+	txs, err := services.GetLatestTransactions()
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, txs)
+}
+
+func TokenHandler(c *gin.Context) {
+	transfers, err := services.GetTokenTransfers()
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, transfers)
 }
