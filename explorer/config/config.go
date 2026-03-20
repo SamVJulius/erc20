@@ -1,0 +1,5 @@
+package config
+
+const RPC_URL = "http://127.0.0.1:8545"
+
+const CONTRACT_ADDRESS = "0x98985994C353242E628FfBF776dFeABfAcee4568"
