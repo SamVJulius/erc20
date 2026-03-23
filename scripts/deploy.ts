@@ -16,6 +16,7 @@ async function main() {
   const address = await token.getAddress();
 
   console.log("✅ Token deployed at:", address);
+  console.log(`Update explorer config: CONTRACT_ADDRESS = "${address}"`);
 }
 
 main().catch((error) => {

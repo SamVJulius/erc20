@@ -27,11 +27,21 @@ func TxHandler(c *gin.Context) {
 }
 
 func TokenHandler(c *gin.Context) {
-	transfers, err := services.GetTokenTransfers()
+	transfers, err := services.GetContractTransfers()
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(200, transfers)
+}
+
+func ConfigHandler(c *gin.Context) {
+	cfg, err := services.GetConfig()
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, cfg)
 }
